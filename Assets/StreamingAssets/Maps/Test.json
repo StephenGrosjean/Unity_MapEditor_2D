@@ -1,0 +1,550 @@
+{
+    "MapName": "Test",
+    "Background": "city",
+    "MapData": [
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 2,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -2,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -3,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 3,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 4,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -4,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -5,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -6,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 5,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 13,
+            "position": {
+                "x": 7,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 11,
+            "position": {
+                "x": -7,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 11,
+            "position": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 13,
+            "position": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": -2,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": -3,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": 2,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": 3,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": -1,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 2,
+            "position": {
+                "x": 0,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": 1,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 5,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": -1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": -2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 9,
+                "y": -4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 100,
+            "position": {
+                "x": -7,
+                "y": 1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 103,
+            "position": {
+                "x": 7,
+                "y": 1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 102,
+            "position": {
+                "x": -2,
+                "y": 3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 101,
+            "position": {
+                "x": 2,
+                "y": 3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": 5,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": 4,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": -5,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": -4,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 1,
+            "position": {
+                "x": -1,
+                "y": 4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 3,
+            "position": {
+                "x": 1,
+                "y": 4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 2,
+            "position": {
+                "x": 0,
+                "y": 4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 5,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": 0,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -1,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -2,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -3,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -4,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -5,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 19,
+            "position": {
+                "x": 13,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 11,
+            "position": {
+                "x": -2,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": -1,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 0,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 1,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 2,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 12,
+            "position": {
+                "x": 3,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 13,
+            "position": {
+                "x": 4,
+                "y": -6,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 9,
+            "position": {
+                "x": 2,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 14,
+            "position": {
+                "x": 1,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 2,
+            "position": {
+                "x": 1,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 2,
+            "position": {
+                "x": 2,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 6,
+            "position": {
+                "x": 3,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 0,
+                "y": 7,
+                "z": 0
+            }
+        }
+    ]
+}

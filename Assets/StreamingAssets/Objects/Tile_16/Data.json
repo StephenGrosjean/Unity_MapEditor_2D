@@ -1,0 +1,14 @@
+{
+    "ID":16,
+    "ObjectType": "Tiles",
+    "ObjectName": "Tile_16",
+    "SpriteName": "Tile_16",
+    "SpriteSize" :  256,
+    "SpriteTint": {
+        "r": 255.0,
+        "g": 255.0,
+        "b": 255.0,
+        "a": 255.0
+    },
+    "ObjectCollider": "BoxCollider"
+}

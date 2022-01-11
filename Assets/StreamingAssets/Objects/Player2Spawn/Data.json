@@ -1,0 +1,15 @@
+{
+    "ID":101,
+    "ObjectType": "Level",
+    "ObjectName": "Player 2 Spawn",
+    "SpriteName": "Sprite",
+    "SpriteSize" :  256,
+    "MaxPerScene" : 1,
+    "SpriteTint": {
+        "r": 0.0,
+        "g": 255.0,
+        "b": 0.0,
+        "a": 255.0
+    },
+    "ObjectCollider": ""
+}
