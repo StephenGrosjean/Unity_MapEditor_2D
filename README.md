@@ -1,10 +1,13 @@
-
-
 # Unity 2D Map editor
-### Features
+## Preview
+![Editor1](Assets/Images/Editor1.PNG)
+![Editor2](Assets/Images/Editor2.PNG)
+
+## Features
 
 - Edit maps in 2D within the game
 - Tile based
+- Json object loading
 - Mod support
 
 ## Requirements
