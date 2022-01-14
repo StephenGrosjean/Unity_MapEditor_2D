@@ -37,9 +37,13 @@ public class GameMapLoader : MonoBehaviour
     private void Play(string mapName) {
         JsonObjectHandler.Map map = jsonObjectHandler.LoadMapFromJson(mapName);
         mapBackground.sprite = jsonObjectHandler.GetBackgroundByName(map.Background).Sprite;
-        foreach(MapEditor.MapObject o in map.MapData) {
+
+        foreach (MapEditor.MapObject o in map.MapData) {
             CreateNewObjectFromData(jsonObjectHandler.FindObjectByID(o.ObjectID), o.position);
         }
+
+        StartCoroutine("GenerateMapCollisionNextFrame");
+
         mainUI.SetActive(false);
     }
 
@@ -53,19 +57,29 @@ public class GameMapLoader : MonoBehaviour
         objSpriteRenderer.sprite = toInstantiate.Sprite;
         objSpriteRenderer.color = toInstantiate.ObjectData.SpriteTint;
 
+        Collider2D objectCollider = null;
+
         //Add the colliders if needed
         if (toInstantiate.ObjectData.ObjectCollider == "BoxCollider") {
-            obj.AddComponent<BoxCollider2D>();
+            objectCollider = obj.AddComponent<BoxCollider2D>();
         }
         else if (toInstantiate.ObjectData.ObjectCollider == "CircleCollider") {
-            obj.AddComponent<CircleCollider2D>();
+            objectCollider = obj.AddComponent<CircleCollider2D>();
         }
         else if (toInstantiate.ObjectData.ObjectCollider == "PolygonCollider") {
-            obj.AddComponent<PolygonCollider2D>();
+            objectCollider = obj.AddComponent<PolygonCollider2D>();
         }
 
+        if(objectCollider != null) {
+            objectCollider.usedByComposite = true;
+        }
         obj.transform.position = position;
 
         return obj;
+    }
+
+    IEnumerator GenerateMapCollisionNextFrame() {
+        yield return null;
+        mapObjectContainer.GetComponent<CompositeCollider2D>().GenerateGeometry();
     }
 }

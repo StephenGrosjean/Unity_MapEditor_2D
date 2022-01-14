@@ -380,6 +380,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 560739946295634944, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739946295634944, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 560739946361345031, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -391,6 +399,34 @@ PrefabInstance:
     - target: {fileID: 560739946361345031, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739946759486567, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739946759486567, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739947763575162, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739947763575162, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739947763575162, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 560739947763575162, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2784069606690194153, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
+      propertyPath: m_GenerationType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3671974652751203950, guid: 7fa473548d32a8f45a8f86614045b986, type: 3}
       propertyPath: m_Name

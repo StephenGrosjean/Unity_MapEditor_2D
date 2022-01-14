@@ -681,6 +681,126 @@
                 "y": 6,
                 "z": 0
             }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 0,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -2,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -1,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 0,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 1,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 2,
+                "y": 7,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 2,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 2,
+                "y": 9,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 1,
+                "y": 9,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 0,
+                "y": 9,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -1,
+                "y": 9,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -2,
+                "y": 9,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -2,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": -1,
+                "y": 8,
+                "z": 0
+            }
+        },
+        {
+            "ObjectID": 4,
+            "position": {
+                "x": 1,
+                "y": 8,
+                "z": 0
+            }
         }
     ]
 }

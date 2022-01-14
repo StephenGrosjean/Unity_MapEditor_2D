@@ -162,25 +162,6 @@ public class MapEditor : MonoBehaviour
         objSpriteRenderer.sprite = toInstantiate.Sprite;
         objSpriteRenderer.color = toInstantiate.ObjectData.SpriteTint;
 
-        //Add the colliders if needed
-        if (toInstantiate.ObjectData.ObjectCollider == "BoxCollider") {
-            obj.AddComponent<PolygonCollider2D>();
-        }
-        else if (toInstantiate.ObjectData.ObjectCollider == "CircleCollider") {
-            obj.AddComponent<CircleCollider2D>();
-        }
-        else if (toInstantiate.ObjectData.ObjectCollider == "PolygonCollider") {
-            obj.AddComponent<PolygonCollider2D>();
-        }
-
-        //Logic for Object type
-        /*if(toInstantiate.ObjectData.ObjectType == "") {
-            
-        }*/
-
-        Rigidbody2D rigid = obj.AddComponent<Rigidbody2D>();
-        rigid.gravityScale = 0;
-        rigid.constraints = RigidbodyConstraints2D.FreezeAll;
         return obj;
     }
 
