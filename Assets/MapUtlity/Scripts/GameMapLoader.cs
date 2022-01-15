@@ -39,7 +39,7 @@ public class GameMapLoader : MonoBehaviour
         mapBackground.sprite = jsonObjectHandler.GetBackgroundByName(map.Background).Sprite;
 
         foreach (MapEditor.MapObject o in map.MapData) {
-            CreateNewObjectFromData(jsonObjectHandler.FindObjectByID(o.ObjectID), o.position);
+            CreateNewObjectFromData(jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack), o.position);
         }
 
         StartCoroutine("GenerateMapCollisionNextFrame");

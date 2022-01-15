@@ -17,6 +17,7 @@ public class JsonObjectHandler : MonoBehaviour
         public Color32 SpriteTint;
         public string ObjectCollider;
         public int MaxPerScene;
+        public string ObjectPack;
     }
 
     //ObjectToInstantiate, used to represent the object that will be instantiated 
@@ -50,6 +51,7 @@ public class JsonObjectHandler : MonoBehaviour
     public List<ObjectToInstantiate> LoadedObjects = new List<ObjectToInstantiate>(); //List of all loaded object inside the Resource folder
     public List<string> MapPaths = new List<string>();
     public List<Background> Backgrounds = new List<Background>();
+    public List<string> Packs = new List<string>();
 
     private void Awake() {
         LoadObjects(); //Load all objects in Objects folder
@@ -58,24 +60,30 @@ public class JsonObjectHandler : MonoBehaviour
     }
 
     private void LoadObjects() {
-        //Get object directories
-        string[] objectDirectories = Directory.GetDirectories(Application.streamingAssetsPath + "/" + objectsFolderName);
+        //Get pack directories
+        string[] packDirectories = Directory.GetDirectories(Application.streamingAssetsPath + "/" + objectsFolderName);
 
-        foreach(string s in objectDirectories) {
-            //Load object using the .json
-            string[] jsonFile = Directory.GetFiles(s + "/", "*.json");
+        foreach(string p in packDirectories) {
+            string[] objectDirectories = Directory.GetDirectories(p);
+            string packName = p.Replace(Application.streamingAssetsPath + "/" + objectsFolderName, "").Replace("\\", "");
+            Packs.Add(packName);
 
-            //Check if we got more than one .json or none in the directory
-            if(jsonFile.Length > 1) {
-                Debug.LogError("Json: More than one .json in the folder!");
+            foreach (string s in objectDirectories) {
+                //Load object using the .json
+                string[] jsonFile = Directory.GetFiles(s + "/", "*.json");
+
+                //Check if we got more than one .json or none in the directory
+                if (jsonFile.Length > 1) {
+                    Debug.LogError("Json: More than one .json in the folder!");
+                }
+                else if (jsonFile.Length == 0) {
+                    Debug.LogError("Json: No .json files in folder");
+                }
+                else {
+                    CreateObjectFromJson(jsonFile[0], packName); //Create the object from the first element on the list (Should be only one) 
+                }
             }
-            else if(jsonFile.Length == 0) {
-                Debug.LogError("Json: No .json files in folder");
-            }
-            else {
-                CreateObjectFromJson(jsonFile[0]); //Create the object from the first element on the list (Should be only one) 
-            }
-        }
+        } 
     }
 
     private void LoadBackgrounds() {
@@ -105,10 +113,11 @@ public class JsonObjectHandler : MonoBehaviour
     /// <summary>
     /// Create an object from its json at the path
     /// </summary>
-    private void CreateObjectFromJson(string path) {
+    private void CreateObjectFromJson(string path, string packName) {
         string spritePath = path.Replace("/Data.json", "");
         //Set the object data from the json file
         ObjectData loadedData = JsonUtility.FromJson<ObjectData>(File.ReadAllText(path));
+        loadedData.ObjectPack = packName;
         ObjectToInstantiate objectToInstantiate = new ObjectToInstantiate();
         objectToInstantiate.ObjectData = loadedData;
         Texture2D loadedTex = new Texture2D(1, 1);
@@ -133,7 +142,14 @@ public class JsonObjectHandler : MonoBehaviour
     }
 
     public Map LoadMapFromJson(string mapName) {
-        return JsonUtility.FromJson<Map>(File.ReadAllText(Application.streamingAssetsPath + "/" + mapsFolderName + "/" + mapName + ".json")); ;
+        Map loadedMap = JsonUtility.FromJson<Map>(File.ReadAllText(Application.streamingAssetsPath + "/" + mapsFolderName + "/" + mapName + ".json"));
+
+        foreach(MapEditor.MapObject o in loadedMap.MapData) {
+            if(o.ObjectPack == "") {
+                o.ObjectPack = "DefaultPack";
+            }
+        }
+        return loadedMap;
     }
 
     public Map GetMapListFromJson(string path) {
@@ -149,9 +165,9 @@ public class JsonObjectHandler : MonoBehaviour
         }
         return null;
     }
-    public ObjectToInstantiate FindObjectByID(int id) {
+    public ObjectToInstantiate FindObject(int id, string packName) {
         foreach(ObjectToInstantiate o in LoadedObjects) {
-            if(o.ObjectData.ID == id) {
+            if(o.ObjectData.ID == id && o.ObjectData.ObjectPack == packName) {
                 return o;
             }
         }

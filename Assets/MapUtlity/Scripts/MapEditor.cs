@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.UI;
-using System.IO;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class MapEditor : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public class MapEditor : MonoBehaviour
     {
         [NonSerialized] public GameObject instantiatedObject;
         public int ObjectID;
+        public string ObjectPack;
         public Vector3Int position;
 
     }
@@ -70,10 +70,6 @@ public class MapEditor : MonoBehaviour
             CancelPlacement();
         }
 
-        if (Input.GetKeyDown(KeyCode.U)) {
-            buttonContainer.SetActive(!buttonContainer.activeInHierarchy);
-        }
-
         //Enable the cursor only on editor mode and if menu is closed
         gridCursor.gameObject.SetActive(objectSelector.currentGameState == ObjectSelector.GameState.Editor && !objectSelector.IsMenuOpen());
 
@@ -99,13 +95,19 @@ public class MapEditor : MonoBehaviour
                 gridCursor.color = Color.red;
 
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) {
-                    MapObject clickedObject = FindMapObjectByPos(worldPositionOnGrid);
+                    if (!EventSystem.current.IsPointerOverGameObject()) {
+                        MapObject clickedObject = FindMapObjectByPos(worldPositionOnGrid);
 
-                    if (clickedObject != null) {
-                        Destroy(clickedObject.instantiatedObject);
-                        objectsInMap.Remove(clickedObject);
-                        objectSelector.UpdateLocks();
+                        if (clickedObject != null) {
+                            Destroy(clickedObject.instantiatedObject);
+                            objectsInMap.Remove(clickedObject);
+                            objectSelector.UpdateLocks();
+                        }
                     }
+                }
+
+                if (Input.GetMouseButtonDown(1)) {
+                    objectSelector.EraseToolClick();
                 }
                 break;
         }
@@ -115,6 +117,7 @@ public class MapEditor : MonoBehaviour
             //Set the currentObjectInHand to this cursor position
             currentObjectInHand.transform.position = worldPositionOnGrid;
             currentObjectInHand.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
             //Check if the placement is correct
             if (isPlacementValid) {
                 //If yes set the object sprite to its color
@@ -122,20 +125,23 @@ public class MapEditor : MonoBehaviour
 
                 //Check if we left click with the mouse
                 if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0)) {
-                    currentObjectInHand.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                    if (!EventSystem.current.IsPointerOverGameObject()) {
+                        currentObjectInHand.GetComponent<SpriteRenderer>().sortingOrder = 0;
 
-                    //Create a new mapObject and set the different members
-                    MapObject mapObject = new MapObject();
-                    mapObject.ObjectID = currentObjectInHandData.ObjectData.ID;
-                    mapObject.position = worldPositionOnGrid;
-                    mapObject.instantiatedObject = Instantiate(currentObjectInHand.gameObject, mapObjectContainer);
+                        //Create a new mapObject and set the different members
+                        MapObject mapObject = new MapObject();
+                        mapObject.ObjectID = currentObjectInHandData.ObjectData.ID;
+                        mapObject.position = worldPositionOnGrid;
+                        mapObject.ObjectPack = currentObjectInHandData.ObjectData.ObjectPack;
+                        mapObject.instantiatedObject = Instantiate(currentObjectInHand.gameObject, mapObjectContainer);
 
-                    //Add the mapObject to the list
-                    objectsInMap.Add(mapObject);
-                    objectSelector.UpdateLocks();
+                        //Add the mapObject to the list
+                        objectsInMap.Add(mapObject);
+                        objectSelector.UpdateLocks();
 
-                    if (!objectSelector.CanPlaceObject(currentObjectInHandData.ObjectData.ID)) {
-                        CancelPlacement();
+                        if (!objectSelector.CanPlaceObject(currentObjectInHandData.ObjectData.ID)) {
+                            CancelPlacement();
+                        }
                     }
                 }
                 else if(Input.GetMouseButtonDown(1)) {
@@ -247,8 +253,9 @@ public class MapEditor : MonoBehaviour
         SetBackground(map.Background);
         objectsInMap = map.MapData;
         List<MapObject> invalidObjects = new List<MapObject>();
+
         foreach(MapObject o in objectsInMap) {
-            JsonObjectHandler.ObjectToInstantiate toCreate = jsonObjectHandler.FindObjectByID(o.ObjectID);
+            JsonObjectHandler.ObjectToInstantiate toCreate = jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack);
             if(toCreate != null) {
                 o.instantiatedObject = InstantiateObject(toCreate, o.position);
             }
@@ -261,7 +268,6 @@ public class MapEditor : MonoBehaviour
         foreach(MapObject o in invalidObjects) {
             objectsInMap.Remove(o);
         }
-
     }
 
     public void ClearMap() {
@@ -282,7 +288,7 @@ public class MapEditor : MonoBehaviour
 
 
         foreach (MapObject o in objectsInMap) {
-            string objectName = jsonObjectHandler.FindObjectByID(o.ObjectID).ObjectData.ObjectName;
+            string objectName = jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack).ObjectData.ObjectName;
             if (objectName.Contains("Player") && objectName.Contains("Spawn")) {
                 playerSpawns++;
             }
@@ -305,4 +311,9 @@ public class MapEditor : MonoBehaviour
         }
         return returnMessage;
     }
+
+    public void ToggleUI() {
+        buttonContainer.SetActive(!buttonContainer.activeInHierarchy);
+    }
+
 }

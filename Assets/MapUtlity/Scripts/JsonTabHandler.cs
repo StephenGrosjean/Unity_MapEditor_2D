@@ -20,7 +20,6 @@ public class JsonTabHandler : MonoBehaviour
        public string tab;
     }
 
-
     private void Awake() {
         //GenerateTabFile();
         LoadTabs();

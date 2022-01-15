@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 [RequireComponent(typeof(JsonObjectHandler))]
 [RequireComponent(typeof(MapEditor))]
@@ -11,10 +10,12 @@ public class ObjectSelector : MonoBehaviour
     public class UIButton
     {
         public string Tab;
+        public string Pack;
         public int ID;
         public GameObject Button;
-        public UIButton(string tab, int ID, GameObject button) {
+        public UIButton(string tab, string pack, int ID, GameObject button) {
             this.Tab = tab;
+            this.Pack = pack;
             this.ID = ID;
             this.Button = button;
         }
@@ -38,6 +39,7 @@ public class ObjectSelector : MonoBehaviour
     [SerializeField] private GameObject mapLoaderUI;
     [SerializeField] private GameObject mapLoaderContainerUI;
     [SerializeField] private GameObject tabListUI;
+    [SerializeField] private GameObject packListUI;
     [SerializeField] private GameObject backgroundListUI;
 
     [SerializeField] private GameObject mapButtonUI;
@@ -58,7 +60,9 @@ public class ObjectSelector : MonoBehaviour
 
     private bool isGridEnabled;
     private string currentTab;
+    private string currentPack;
     private List<UIButton> buttons = new List<UIButton>();
+
     //Components
     private JsonObjectHandler jsonObjectHandler; 
     private JsonTabHandler jsonTabHandler;
@@ -81,23 +85,32 @@ public class ObjectSelector : MonoBehaviour
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.E) && currentToolState != ToolState.Erasing) {
-            switch (currentGameState) {
-                case GameState.Editor:
-                    ObjectSelectorUIActiveState(!objectSelectorUI.transform.gameObject.activeInHierarchy);
+        if (!mapNameInputField.isFocused) {
+            if (Input.GetKeyDown(KeyCode.Tab) && currentToolState != ToolState.Erasing) {
+                switch (currentGameState) {
+                    case GameState.Editor:
+                        ObjectSelectorUIActiveState(!objectSelectorUI.transform.gameObject.activeInHierarchy);
 
-                    //If we are currently placing an object, cancel its placement
-                    if (mapEditor.PlacingObject) {
-                        mapEditor.CancelPlacement();
-                    }
-                    break;
-                case GameState.Loader:
-                    MapLoaderUIActiveState(!mapLoaderUI.activeInHierarchy);
-                    break;
-                default:
-                    break;
+                        //If we are currently placing an object, cancel its placement
+                        if (mapEditor.PlacingObject) {
+                            mapEditor.CancelPlacement();
+                        }
+                        break;
+                    case GameState.Loader:
+                        MapLoaderUIActiveState(!mapLoaderUI.activeInHierarchy);
+                        break;
+                    default:
+                        break;
+                }
             }
 
+            if (Input.GetKeyDown(KeyCode.R)) {
+                mapEditor.ToggleUI();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E)) {
+                EraseToolClick();
+            }
         }
     }
 
@@ -113,9 +126,15 @@ public class ObjectSelector : MonoBehaviour
         foreach (Transform child in objectContainerUI.transform) {
             Destroy(child.gameObject);
         }
+
         foreach (Transform child in tabListUI.transform) {
             Destroy(child.gameObject);
         }
+
+        foreach (Transform child in packListUI.transform) {
+            Destroy(child.gameObject);
+        }
+
         foreach (Transform child in backgroundListUI.transform) {
             Destroy(child.gameObject);
         }
@@ -127,6 +146,12 @@ public class ObjectSelector : MonoBehaviour
             tabObject.GetComponent<Button>().onClick.AddListener(delegate { SetCurrentTab(tab.tab); });
         }
 
+        //Create Pack Buttons
+        foreach(string pack in jsonObjectHandler.Packs) {
+            GameObject packObject = Instantiate(tabPrefabUI, packListUI.transform);
+            packObject.GetComponentInChildren<TextMeshProUGUI>().text = pack;
+            packObject.GetComponent<Button>().onClick.AddListener(delegate { SetCurrentPack(pack); });
+        }
 
         //Create Background Buttons
         foreach(JsonObjectHandler.Background b in jsonObjectHandler.Backgrounds) {
@@ -144,9 +169,10 @@ public class ObjectSelector : MonoBehaviour
                     uiElement.GetComponentInChildren<TextMeshProUGUI>().text = o.ObjectData.ObjectName;
                     uiElement.GetComponent<Button>().onClick.AddListener(delegate { mapEditor.InstantiateObject(o); });
 
-                    UIButton button = new UIButton(o.ObjectData.ObjectType, o.ObjectData.ID, uiElement);
+                    UIButton button = new UIButton(o.ObjectData.ObjectType, o.ObjectData.ObjectPack, o.ObjectData.ID, uiElement);
                     buttons.Add(button);
                 }
+                UpdateLocks();
                 break;
 
             case GameState.Loader:
@@ -164,7 +190,7 @@ public class ObjectSelector : MonoBehaviour
                 }
                 break;
         }
-        
+
     }
 
     public void MapLoaderUIActiveState(bool state) {
@@ -195,7 +221,7 @@ public class ObjectSelector : MonoBehaviour
 
     private void ToggleTabContent() {
         foreach(UIButton b in buttons) {
-            b.Button.SetActive(b.Tab == currentTab);
+            b.Button.SetActive(b.Tab == currentTab && b.Pack == currentPack);
         }
     }
 
@@ -226,6 +252,7 @@ public class ObjectSelector : MonoBehaviour
         SetUIState();
         Populate();
         SetCurrentTab(jsonTabHandler.Tabs[0].tab);
+        SetCurrentPack(jsonObjectHandler.Packs[0]);
     }
 
     public void EraseToolClick() {
@@ -250,12 +277,18 @@ public class ObjectSelector : MonoBehaviour
         ToggleTabContent();
     }
 
+    private void SetCurrentPack(string packName) {
+        currentPack = packName;
+        ToggleTabContent();
+    }
+
     public void UpdateLocks() {
         foreach(JsonObjectHandler.ObjectToInstantiate i in jsonObjectHandler.LoadedObjects) {
             if (i.ObjectData.MaxPerScene == 0) continue;
             int instancesInScene = 0;
             UIButton uiButton = null;
-            foreach(UIButton b in buttons) {
+
+            foreach (UIButton b in buttons) {
                 if(b.ID == i.ObjectData.ID) {
                     uiButton = b;
                 }
@@ -267,7 +300,11 @@ public class ObjectSelector : MonoBehaviour
                 }
             }
 
-            uiButton.Button.transform.Find("Lock").gameObject.SetActive(instancesInScene >= i.ObjectData.MaxPerScene);
+            CanvasGroup lockUI = uiButton.Button.transform.Find("Lock").GetComponent<CanvasGroup>();
+            bool lockState = instancesInScene >= i.ObjectData.MaxPerScene;
+            lockUI.alpha = lockState ? 1:0;
+            lockUI.interactable = lockState;
+            lockUI.blocksRaycasts = lockState;
             uiButton.Button.GetComponent<Button>().interactable = !(instancesInScene >= i.ObjectData.MaxPerScene);
 
         }

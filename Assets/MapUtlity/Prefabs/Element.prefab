@@ -133,13 +133,14 @@ GameObject:
   - component: {fileID: 551885435625724369}
   - component: {fileID: 7686542525153054675}
   - component: {fileID: 6395968950842597703}
+  - component: {fileID: 2576795311487496665}
   m_Layer: 5
   m_Name: Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &551885435625724369
 RectTransform:
   m_ObjectHideFlags: 0
@@ -197,6 +198,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2576795311487496665
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959484731463361872}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5644724319454152166
 GameObject:
   m_ObjectHideFlags: 0
