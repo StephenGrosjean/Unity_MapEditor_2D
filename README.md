@@ -26,15 +26,16 @@ The games cene located under **MapUtlity/Scenes/GameScene**, with the *GameMapLo
 The editor support modding as it load the tiles using *JsonUtility*
 
 ###  Objects
-You can add objects under the **StreamingAssets/Objects** folder.
+You can add objects under the **StreamingAssets/Objects** folder, you will need to either modify an existing pack or create a new one.
 
 #### Objects structure
 The objects structure in the **Objects** folder need to be like this, *Sprite.png* can be named differently
 ```
 |--Objects
-    |--MyObject
-        |--Data.json
-        |--Sprite.png
+    |--MyPackName
+        |--MyObject
+            |--Data.json
+            |--Sprite.png
 ```
 
 #### Objects formating
@@ -44,7 +45,6 @@ The Json need to contain the following data:
     "ID":0,
     "ObjectType": "Tiles",
     "ObjectName": "Tile_00", 
-    "SpriteName": "Tile_00",
     "SpriteSize" :  256,
     "MaxPerScene" : 1,
     "SpriteTint": {
@@ -56,11 +56,9 @@ The Json need to contain the following data:
     "ObjectCollider": "BoxCollider"
 }
 ```
-**ID** : This is the unique ID of the object, now the tiles for map construction are ranged from **0 to 99** and the special components like *Player spawns* and *Weapon spawns* objects are ranged from **100 to 199**, ***Do not have two objects with the same ID, it will just pick the first one in the map loading process***
+**ID** : This is the unique ID of the object **ONLY ACROSS THE PACK**, now the tiles for map construction are ranged from **0 to 99** and the special components like *Player spawns* and *Weapon spawns* objects are ranged from **100 to 199**, ***Do not have two objects with the same ID, it will just pick the first one in the map loading process***
 
 **ObjectType** : The object type is used to determine the tab in the editor *(Tabs listed in **StreamingAssets/Tabs**)* 
-
-**SpriteName** : Used to find the sprite name (Maybe it will not be used after)
 
 **SpriteSize** : The tile need to be a square (Try to use a power of 2 for the size) (256 work fine)
 
