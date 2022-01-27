@@ -17,10 +17,13 @@ public class MapEditor : MonoBehaviour
     {
         [NonSerialized] public GameObject instantiatedObject;
         public int ObjectID;
+        public int LayerInMap;
         public string ObjectPack;
         public Vector3Int position;
 
     }
+
+    [SerializeField] private TextMeshProUGUI layerCount;
 
     [Header("Grid Cursor")]
     [SerializeField] private SpriteRenderer gridCursor;
@@ -33,22 +36,17 @@ public class MapEditor : MonoBehaviour
     [SerializeField] private GameObject buttonContainer;
     [SerializeField] private SpriteRenderer mapBackground;
 
-    [Header("Map Validator")]
-    [SerializeField] private int playerCount;
-    [SerializeField] private int weaponCount;
-    [SerializeField] private TMP_InputField playerCountField;
-    [SerializeField] private TMP_InputField weaponCountField;
-
-
     //Object placement
     private Transform currentObjectInHand;
     private JsonObjectHandler.ObjectToInstantiate currentObjectInHandData;
     private string currentBackground;
-
+    private int currentLayer;
     public List<MapObject> objectsInMap = new List<MapObject>(); //List of all objects in the map
     
 
     public bool PlacingObject; //Are we currently placing an object?
+    private const int minLayer = -1;
+    private const int maxLayer = 1;
 
     private void OnDrawGizmos() {
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -133,7 +131,10 @@ public class MapEditor : MonoBehaviour
                         mapObject.ObjectID = currentObjectInHandData.ObjectData.ID;
                         mapObject.position = worldPositionOnGrid;
                         mapObject.ObjectPack = currentObjectInHandData.ObjectData.ObjectPack;
+                        mapObject.LayerInMap = currentLayer;
                         mapObject.instantiatedObject = Instantiate(currentObjectInHand.gameObject, mapObjectContainer);
+
+                        mapObject.instantiatedObject.GetComponent<SpriteRenderer>().sortingOrder = currentLayer; 
 
                         //Add the mapObject to the list
                         objectsInMap.Add(mapObject);
@@ -258,6 +259,7 @@ public class MapEditor : MonoBehaviour
             JsonObjectHandler.ObjectToInstantiate toCreate = jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack);
             if(toCreate != null) {
                 o.instantiatedObject = InstantiateObject(toCreate, o.position);
+                o.instantiatedObject.GetComponent<SpriteRenderer>().sortingOrder = o.LayerInMap;
             }
             else {
                 invalidObjects.Add(o);
@@ -281,35 +283,18 @@ public class MapEditor : MonoBehaviour
         currentBackground = background;
     }
 
-    public string MapValidator() {
-        int playerSpawns = 0;
-        int weaponSpawns = 0;
-        string returnMessage = "";
-
-
-        foreach (MapObject o in objectsInMap) {
-            string objectName = jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack).ObjectData.ObjectName;
-            if (objectName.Contains("Player") && objectName.Contains("Spawn")) {
-                playerSpawns++;
-            }
-
-            if(objectName.Contains("Weapon") && objectName.Contains("Spawn")) {
-                weaponSpawns++;
-            }
+    public void IncreaseLayer() {
+        if (currentLayer + 1 <= maxLayer) {
+            currentLayer++;
+            layerCount.text = currentLayer.ToString();
         }
+    }
 
-        if(playerSpawns < playerCount) {
-            returnMessage += "Not enough player spawns, " + " need "+ (playerCount- playerSpawns) + "\n";
+    public void DecreaseLayer() {
+        if (currentLayer - 1 >= minLayer) {
+            currentLayer--;
+            layerCount.text = currentLayer.ToString();
         }
-
-        if (weaponSpawns < weaponCount) {
-            returnMessage += "Not enough weapon spawns, " + " minimum needed " + (weaponCount - weaponSpawns);
-        }
-
-        if (playerSpawns >= playerCount && weaponSpawns >= weaponCount) {
-            returnMessage = "Map valid";
-        }
-        return returnMessage;
     }
 
     public void ToggleUI() {

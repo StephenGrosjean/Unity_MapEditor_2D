@@ -34,12 +34,12 @@ public class GameMapLoader : MonoBehaviour
         }
     }
 
-    private void Play(string mapName) {
+    public void Play(string mapName) {
         JsonObjectHandler.Map map = jsonObjectHandler.LoadMapFromJson(mapName);
         mapBackground.sprite = jsonObjectHandler.GetBackgroundByName(map.Background).Sprite;
 
         foreach (MapEditor.MapObject o in map.MapData) {
-            CreateNewObjectFromData(jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack), o.position);
+            CreateNewObjectFromData(jsonObjectHandler.FindObject(o.ObjectID, o.ObjectPack), o.position, o.LayerInMap);
         }
 
         StartCoroutine("GenerateMapCollisionNextFrame");
@@ -47,7 +47,7 @@ public class GameMapLoader : MonoBehaviour
         mainUI.SetActive(false);
     }
 
-    private GameObject CreateNewObjectFromData(JsonObjectHandler.ObjectToInstantiate toInstantiate, Vector3Int position) {
+    private GameObject CreateNewObjectFromData(JsonObjectHandler.ObjectToInstantiate toInstantiate, Vector3Int position, int layer) {
         GameObject obj = Instantiate(objectPrefab, Vector3.zero, objectPrefab.transform.rotation); //Instantiate the object at 0,0,0
         obj.transform.SetParent(mapObjectContainer);
 
@@ -59,19 +59,21 @@ public class GameMapLoader : MonoBehaviour
 
         Collider2D objectCollider = null;
 
-        //Add the colliders if needed
-        if (toInstantiate.ObjectData.ObjectCollider == "BoxCollider") {
-            objectCollider = obj.AddComponent<BoxCollider2D>();
-        }
-        else if (toInstantiate.ObjectData.ObjectCollider == "CircleCollider") {
-            objectCollider = obj.AddComponent<CircleCollider2D>();
-        }
-        else if (toInstantiate.ObjectData.ObjectCollider == "PolygonCollider") {
-            objectCollider = obj.AddComponent<PolygonCollider2D>();
-        }
+        if (layer == 0) {
+            //Add the colliders if needed
+            if (toInstantiate.ObjectData.ObjectCollider == "BoxCollider") {
+                objectCollider = obj.AddComponent<BoxCollider2D>();
+            }
+            else if (toInstantiate.ObjectData.ObjectCollider == "CircleCollider") {
+                objectCollider = obj.AddComponent<CircleCollider2D>();
+            }
+            else if (toInstantiate.ObjectData.ObjectCollider == "PolygonCollider") {
+                objectCollider = obj.AddComponent<PolygonCollider2D>();
+            }
 
-        if(objectCollider != null) {
-            objectCollider.usedByComposite = true;
+            if (objectCollider != null) {
+                objectCollider.usedByComposite = true;
+            }
         }
         obj.transform.position = position;
 
